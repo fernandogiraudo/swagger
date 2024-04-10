@@ -1,0 +1,38 @@
+paths:
+  /api/sessions/register:
+    post:
+      summary: Registra un nuevo usuario
+      tags:
+        - Sessions
+      responses:
+        "201":
+          description: El usuario se ha registrado correctamente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/registerUser'
+
+components:
+  requestBodies:
+    registerUser:
+      type: object
+      properties:
+        first_name:
+          type: String
+          description: Nombre de usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Contraseña que luego será hasheada
+      example:
+        first_name: Fernando
+        last_name: Giraudo
+        email: fergiraudo91@gmail.com
+        password: 123456789

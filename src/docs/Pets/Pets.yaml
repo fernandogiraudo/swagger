@@ -1,0 +1,85 @@
+paths:
+    /api/pets:
+      get:
+        summary: Obtiene todas las mascotas
+        tags:
+          - Pets
+        responses:
+          "200":
+            description: Mascotas obtenidas
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#components/schemas/Pets'
+          "500": 
+            description: Error de servidor
+      post:
+        summary: Crea una nueva mascota
+        tags:
+          - Pets
+        responses:
+          "201":
+            description: La mascota ha sido creada correctamente
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#components/requestBodies/createPet'
+
+components:
+  schemas:
+    Pets:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id de mongo autogenerado
+        name:
+          type: String
+          description: Nombre de la mascota
+        specie:
+          type: String
+          description: Especie de la mascota
+        birthDate:
+          type: Date
+          description: Fecha de nacimiento de la mascota
+        adopted:
+          type: Boolean
+          description: Define si la mascota está adoptada
+        image:
+          type: String
+          description: URL de la imágen de la mascota
+        owner:
+          type: ObjectId
+          description: Id del dueño
+      example:
+        _id: ObjectId("6615429dd2a13fada5b9f660")
+        name: Jenny
+        specie: Dog
+        birthDate: 2013-03-03T00:00:00.000+00:00
+        adopted: true
+        image: http://localhost/image/jenny.jpg
+        owner: ObjectId("66142c8098412e79f5c31950")
+  requestBodies:
+    createPet:
+      type: object
+      properties:
+        name:
+          type: String
+          description: Nombre de la mascota
+        specie:
+          type: String
+          description: Especie de la mascota
+        birthDate:
+          type: Date
+          description: Fecha de nacimiento de la mascota
+        image:
+          type: String
+          description: URL de la imágen de la mascota
+      example:
+         name: Jenny
+         specie: Dog
+         birthDate: 2013-03-03

@@ -1,0 +1,16 @@
+paths:
+  api/adoptions/{uid}/{pid}:
+    post:
+      summary: Adopta una mascota, vincula dueño con animal
+      tags:
+        - Adoptions
+      parameters:
+        - name: uid
+          in: path
+          description: Id del usuario
+        - name: pid
+          in: path
+          description: Id de la mascota
+      responses:
+        "200":
+          description: La adopcion se hizo correctamente

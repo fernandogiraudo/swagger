@@ -1,0 +1,103 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Los usuarios se han obtenido satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Users'
+        "400":
+          description: Los usuarios no se han obtenido debido a un error
+  
+  /api/users/{uid}:
+    get:
+      summary: Obtiene un usuario en particular por su Id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          description: Id del usuario
+          schema:
+            type: ObjectId
+      responses:
+        "200":
+          description: El usuario se ha encontrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Users'
+        "500":
+          description: Error de servidor
+    
+    put:
+      summary: Actualiza el usuario a partir de su Id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          description: Id del usuario que se desea Actualizar
+          schema:
+            type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateUser'
+
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongo
+        first_name:
+          type: String
+          description: Nombre de usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Contraseña hasheada del usuario
+      example:
+        _id: ObjectId("66142c8098412e79f5c31950")
+        first_name: Fernando
+        last_name: Giraudo
+        email: fergiraudo91@gmail.com
+        password: $2b$10$70.0Ulm63oV0ZvXM.hZAKuY2cBR9lTfH23HMvJyEk/LyvDgv1s1AW
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: String
+          description: Nombre de usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Contraseña que luego será hasheada
+      example:
+        first_name: Fernando
+        last_name: Giraudo
+        email: fergiraudo91@gmail.com
+        password: 123456789
